@@ -1,0 +1,17 @@
+﻿@model StocksAndShares.Client.Models.Accounts.Login
+@{
+    var error = TempData["Error"] as string;
+}
+<form asp-controller="Accounts" asp-action="Login">
+    <div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" /> <br />
+        <label asp-for="Password"></label>
+        <input asp-for="Password" /><br />
+        <label asp-for="RememberMe"></label>
+        <input asp-for="RememberMe" />
+        @Html.HiddenFor(u => u.returnUrl)
+        <input type="submit" />
+    </div>
+    <b>@error</b>
+</form>
