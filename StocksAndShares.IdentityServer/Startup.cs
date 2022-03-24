@@ -17,7 +17,13 @@ namespace StocksAndShares.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddIdentityServer()
+                .AddInMemoryApiScopes(MyConfiguration.ApiScopes)
+                .AddInMemoryApiResources(MyConfiguration.GetApiResources)
+                .AddInMemoryClients(MyConfiguration.GetClients)
+                .AddDeveloperSigningCredential();
+
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -35,11 +41,9 @@ namespace StocksAndShares.IdentityServer
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseIdentityServer();
+
             app.UseRouting();
-
-            app.UseAuthentication();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

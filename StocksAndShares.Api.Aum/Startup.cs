@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StocksAndShares.Api.Aum.Services;
+using StocksAndShares.Api.Aum.Services.Factory;
 
 namespace StocksAndShares.Api.Aum
 {
@@ -17,6 +19,13 @@ namespace StocksAndShares.Api.Aum
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // utilities
+            services.AddHttpClient<StocksAndSharesHttpClient>();
+            services.AddTransient<IStocksAndSharesHttpClient, StocksAndSharesHttpClient>();
+
+            // services
+            services.AddScoped<ILiquidFundsService, LiquidFundsService>();
+            
             services.AddControllers();
         }
 
@@ -36,10 +45,6 @@ namespace StocksAndShares.Api.Aum
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthentication();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

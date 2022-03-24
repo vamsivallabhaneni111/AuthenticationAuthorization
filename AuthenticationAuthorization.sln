@@ -6,14 +6,17 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Introduction", "Introduction", "{1F9DDDE0-E803-4989-AEDD-BB5FB302C3A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{A4CEF16B-F650-44CF-ADEF-7A4692D6ECD4}"
+	ProjectSection(SolutionItems) = preProject
+		2.0_ClientCredential.txt = 2.0_ClientCredential.txt
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StocksAndShares.Client", "StocksAndShares.Client\StocksAndShares.Client.csproj", "{254A9CBC-59D8-49BA-A852-38E86B41ADE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StocksAndShares.Client", "StocksAndShares.Client\StocksAndShares.Client.csproj", "{254A9CBC-59D8-49BA-A852-38E86B41ADE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StocksAndShares.Api.Aum", "StocksAndShares.Api.Aum\StocksAndShares.Api.Aum.csproj", "{5E409BDA-FD73-45F2-90E7-A177B802D1D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StocksAndShares.Api.Aum", "StocksAndShares.Api.Aum\StocksAndShares.Api.Aum.csproj", "{5E409BDA-FD73-45F2-90E7-A177B802D1D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StocksAndShares.Api.LiquidFunds", "StocksAndShares.Api.LiquidFunds\StocksAndShares.Api.LiquidFunds.csproj", "{B208FEE3-7602-4310-A3FD-785375EF00A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StocksAndShares.Api.LiquidFunds", "StocksAndShares.Api.LiquidFunds\StocksAndShares.Api.LiquidFunds.csproj", "{B208FEE3-7602-4310-A3FD-785375EF00A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StocksAndShares.IdentityServer", "StocksAndShares.IdentityServer\StocksAndShares.IdentityServer.csproj", "{977B2C5B-E967-4CC1-9822-39AB3887FE4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StocksAndShares.IdentityServer", "StocksAndShares.IdentityServer\StocksAndShares.IdentityServer.csproj", "{977B2C5B-E967-4CC1-9822-39AB3887FE4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
