@@ -27,10 +27,10 @@ namespace StocksAndShares.IdentityServer
                 }
             };
 
-        public static IEnumerable<ApiScope> ApiScopes =>
-            new List<ApiScope>
-            {
-                new ApiScope("LiquidFunds", "Engine")
-            };
+        //public static IEnumerable<ApiScope> ApiScopes =>
+        //    new List<ApiScope>
+        //    {
+        //        new ApiScope("LiquidFunds", "Engine")
+        //    };
     }
 }

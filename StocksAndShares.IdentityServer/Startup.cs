@@ -18,7 +18,7 @@ namespace StocksAndShares.IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityServer()
-                .AddInMemoryApiScopes(MyConfiguration.ApiScopes)
+                //.AddInMemoryApiScopes(MyConfiguration.ApiScopes)
                 .AddInMemoryApiResources(MyConfiguration.GetApiResources)
                 .AddInMemoryClients(MyConfiguration.GetClients)
                 .AddDeveloperSigningCredential();
