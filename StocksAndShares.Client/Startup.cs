@@ -20,8 +20,20 @@ namespace StocksAndShares.Client
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o => o.LoginPath = "/Accounts/Login");
+            services.AddAuthentication(config =>
+                {
+                    config.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    config.DefaultChallengeScheme = "oidc";
+                })
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.Authority = "https://localhost:44322/";
+                    options.ClientId = "client_id_mvc";
+                    options.ClientSecret = "client_secret_mvc";
+                    options.SaveTokens = true;
+                    options.ResponseType = "code";
+                });
 
             services.AddControllersWithViews(options => {
                 // Global Auth Policy
@@ -29,7 +41,7 @@ namespace StocksAndShares.Client
                                         .RequireAuthenticatedUser()
                                         .Build();
 
-                options.Filters.Add(new AuthorizeFilter(authPolicy_global));
+                //options.Filters.Add(new AuthorizeFilter(authPolicy_global));
             });
         }
 

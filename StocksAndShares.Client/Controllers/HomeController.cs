@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace StocksAndShares.Client.Controllers
 {
@@ -6,6 +7,13 @@ namespace StocksAndShares.Client.Controllers
     {
         [HttpGet]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Secret()
         {
             return View();
         }
