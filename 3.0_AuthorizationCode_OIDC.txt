@@ -1,0 +1,7 @@
+Here in this branch we have created a userfacing App named StocksAndShares.Client.
+
+This has secret method which needs to be authenticated.
+
+Client is registered with IdentityServer using Authorization-Code GrantType.
+When the request is succeeded, it's challenged back to client => Needs user to be logged-in and verify.
+Here we have done coding upto challenging back.

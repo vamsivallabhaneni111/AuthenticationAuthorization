@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{A4CEF16B-F650-44CF-ADEF-7A4692D6ECD4}"
 	ProjectSection(SolutionItems) = preProject
 		2.0_ClientCredential.txt = 2.0_ClientCredential.txt
+		3.0_AuthorizationCode_OIDC.txt = 3.0_AuthorizationCode_OIDC.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StocksAndShares.Client", "StocksAndShares.Client\StocksAndShares.Client.csproj", "{254A9CBC-59D8-49BA-A852-38E86B41ADE5}"
