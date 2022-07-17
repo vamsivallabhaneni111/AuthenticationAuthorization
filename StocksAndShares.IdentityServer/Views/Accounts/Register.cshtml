@@ -1,0 +1,22 @@
+﻿@model StocksAndShares.IdentityServer.Models.Accounts.RegisterVM
+@{
+    var error = TempData["Error"] as string;
+}
+<form asp-controller="Accounts" asp-action="Register" method="post">
+    <div>
+        <input type="hidden" asp-for="returnUrl"/>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName" class="text-danger"></span> <br />
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span> <br />
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span> <br />
+        <input type="submit" />
+        <a asp-controller="Accounts" asp-action="Login" 
+            asp-route-returnUrl="@Model.returnUrl">Back to Login</a>
+    </div>
+    <b>@error</b>
+</form>

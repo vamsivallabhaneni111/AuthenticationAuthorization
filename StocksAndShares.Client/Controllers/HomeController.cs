@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace StocksAndShares.Client.Controllers
 {
@@ -13,8 +15,11 @@ namespace StocksAndShares.Client.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Secret()
+        public async Task<IActionResult> Secret()
         {
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var idToken = await HttpContext.GetTokenAsync("id_token");
+            var refreshToken = await HttpContext.GetTokenAsync("refresh_token");
             return View();
         }
     }

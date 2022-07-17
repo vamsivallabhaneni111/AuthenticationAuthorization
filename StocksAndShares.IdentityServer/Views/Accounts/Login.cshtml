@@ -1,17 +1,19 @@
-﻿@model StocksAndShares.Client.Models.Accounts.Login
+﻿@model StocksAndShares.IdentityServer.Models.Accounts.LoginVM
 @{
     var error = TempData["Error"] as string;
 }
-<form asp-controller="Accounts" asp-action="Login">
+<form asp-controller="Accounts" asp-action="Login" method="post">
     <div>
+        <input type="hidden" asp-for="returnUrl"/>
         <label asp-for="UserName"></label>
         <input asp-for="UserName" /> <br />
         <label asp-for="Password"></label>
         <input asp-for="Password" /><br />
         <label asp-for="RememberMe"></label>
         <input asp-for="RememberMe" />
-        @Html.HiddenFor(u => u.returnUrl)
         <input type="submit" />
+        <a asp-controller="Accounts" asp-action="Register" 
+            asp-route-returnUrl="@Model.returnUrl">Register</a>
     </div>
     <b>@error</b>
 </form>

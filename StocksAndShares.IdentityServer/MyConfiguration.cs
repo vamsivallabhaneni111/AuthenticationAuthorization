@@ -44,7 +44,8 @@ namespace StocksAndShares.IdentityServer
                         "Aum", 
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
-                    }
+                    },
+                    RequireConsent = false
                 }
             };
 

@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StocksAndShares.IdentityServer.Data;
 
 namespace StocksAndShares.IdentityServer
 {
@@ -17,7 +21,29 @@ namespace StocksAndShares.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>(config =>
+            {
+                config.UseInMemoryDatabase("Memory");
+            });
+
+            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+            {
+                config.Password.RequiredLength = 4;
+                config.Password.RequireDigit = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireNonAlphanumeric = false;
+            })
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme;
+                config.LoginPath = "/Accounts/Login";
+            });
+
             services.AddIdentityServer()
+                .AddAspNetIdentity<IdentityUser>()
                 //.AddInMemoryApiScopes(MyConfiguration.ApiScopes)
                 .AddInMemoryIdentityResources(MyConfiguration.GetIdentityResources)
                 .AddInMemoryApiResources(MyConfiguration.GetApiResources)

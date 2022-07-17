@@ -24,6 +24,7 @@ namespace StocksAndShares.Client
                 {
                     config.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     config.DefaultChallengeScheme = "oidc";
+                    config.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 })
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddOpenIdConnect("oidc", options =>
