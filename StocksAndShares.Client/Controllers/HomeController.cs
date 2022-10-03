@@ -12,6 +12,13 @@ namespace StocksAndShares.Client.Controllers
         {
             return View();
         }
+        
+        [HttpGet]
+        [Authorize]
+        public IActionResult Landing()
+        {
+            return View();
+        }
 
         [HttpGet]
         [Authorize]
