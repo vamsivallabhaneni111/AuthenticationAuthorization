@@ -7,13 +7,6 @@ namespace StocksAndShares.IdentityServer
 {
     public static class MyConfiguration
     {
-        public static IEnumerable<ApiResource> GetApiResources =>
-            new List<ApiResource> {
-                new ApiResource("LiquidFunds"),
-
-                new ApiResource("Aum")
-            };
-
         public static IEnumerable<Client> GetClients =>
             new List<Client>
             {
@@ -49,13 +42,25 @@ namespace StocksAndShares.IdentityServer
                 }
             };
 
+        // This is used to craft the Id Token by IdentityServer.
         public static IEnumerable<IdentityResource> GetIdentityResources =>
             new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
 
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+
+                new IdentityResource("employee_profile","Employee Profile", new string[]{"employee_id", "external_ref_id"}),
             };
+
+        // This is used to craft the access Token by IdentityServer.
+        public static IEnumerable<ApiResource> GetApiResources =>
+            new List<ApiResource> {
+                new ApiResource("LiquidFunds"),
+
+                new ApiResource("Aum")
+            };
+
 
         //public static IEnumerable<ApiScope> ApiScopes =>
         //    new List<ApiScope>

@@ -1,0 +1,4 @@
+﻿3.1 AuthCode
+
+This is all about Claims & Scopes. And configure Id Token using IdentityResources &
+access Token using ApiResources.
