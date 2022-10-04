@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +35,10 @@ namespace StocksAndShares.Client
                     options.ClientSecret = "client_secret_mvc";
                     options.SaveTokens = true;
                     options.ResponseType = "code";
+
+                    //custom claims
+                    options.Scope.Add("employee_profile");
+                    options.Scope.Add("custom.profile");
                 });
 
             services.AddControllersWithViews(options => {

@@ -2,3 +2,16 @@
 
 This is all about Claims & Scopes. And configure Id Token using IdentityResources &
 access Token using ApiResources.
+
+
+There are 2 ways of configuring custom claims.
+
+While creating an user, we need add the claim for the user. eg: employee_id
+Make the custom claims to be accessible by clients using Allowed scopes eg: AllowedScopes = { employee_id }
+
+And to reterive them on client side we have following config types.
+
+1. AlwaysIncludeUserClaimsInIdToken = true
+This would automatically bind all the claims into Id Token.
+
+2.  

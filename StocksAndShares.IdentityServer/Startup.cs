@@ -38,7 +38,7 @@ namespace StocksAndShares.IdentityServer
 
             services.ConfigureApplicationCookie(config =>
             {
-                config.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme; //It holds logged-in user's data.
+                config.Cookie.Name = "Identity_Cookie"; //It holds logged-in user's data.
                 config.LoginPath = "/Accounts/Login";
             });
 

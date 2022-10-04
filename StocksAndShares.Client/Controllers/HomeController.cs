@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace StocksAndShares.Client.Controllers
@@ -24,9 +25,15 @@ namespace StocksAndShares.Client.Controllers
         [Authorize]
         public async Task<IActionResult> Secret()
         {
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
             var idToken = await HttpContext.GetTokenAsync("id_token");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
             var refreshToken = await HttpContext.GetTokenAsync("refresh_token");
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var idTokenDesrialsed = tokenHandler.ReadJwtToken(idToken);
+            var accessTokenDesrialsed = tokenHandler.ReadJwtToken(accessToken);
+            //var refreshTokenDesrialsed = tokenHandler.ReadJwtToken(refreshToken);
             return View();
         }
     }

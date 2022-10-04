@@ -36,11 +36,15 @@ namespace StocksAndShares.IdentityServer
                         "LiquidFunds", 
                         "Aum", 
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "employee_profile",
+                        "custom.profile",
                     },
-                    RequireConsent = false
+                    RequireConsent = false,
+                    AlwaysIncludeUserClaimsInIdToken = true,
                 }
             };
+
 
         // This is used to craft the Id Token by IdentityServer.
         public static IEnumerable<IdentityResource> GetIdentityResources =>
@@ -50,7 +54,15 @@ namespace StocksAndShares.IdentityServer
 
                 new IdentityResources.Profile(),
 
-                new IdentityResource("employee_profile","Employee Profile", new string[]{"employee_id", "external_ref_id"}),
+                new IdentityResource
+                {
+                    Name = "employee_profile",
+                    UserClaims = {"employee_id"},
+                },
+                new IdentityResource(
+                    name: "custom.profile",
+                    displayName: "Custom profile",
+                    claimTypes: new[] { "status" }),
             };
 
         // This is used to craft the access Token by IdentityServer.
@@ -62,10 +74,15 @@ namespace StocksAndShares.IdentityServer
             };
 
 
-        //public static IEnumerable<ApiScope> ApiScopes =>
-        //    new List<ApiScope>
+        //public static IEnumerable<Scope> Scopes =>
+        //    new List<Scope>
         //    {
-        //        new ApiScope("LiquidFunds", "Engine")
+        //        new Scope
+        //        {
+        //            Name= "employee_profile",
+        //            UserClaims = {"employee_id"},
+                    
+        //        }
         //    };
     }
 }

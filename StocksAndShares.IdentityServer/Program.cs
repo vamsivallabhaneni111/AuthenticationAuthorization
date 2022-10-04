@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StocksAndShares.IdentityServer.Data;
+using System.Security.Claims;
 
 namespace StocksAndShares.IdentityServer
 {
@@ -18,8 +19,10 @@ namespace StocksAndShares.IdentityServer
             {
                var userManager = scope.ServiceProvider
                     .GetRequiredService<UserManager<IdentityUser>>();
-
                 userManager.CreateAsync(SeedingUsers.GetUser, "password").GetAwaiter().GetResult();
+                userManager.AddClaimAsync(SeedingUsers.GetUser, new Claim("employee_id", "employee_id")).GetAwaiter().GetResult();
+                userManager.AddClaimAsync(SeedingUsers.GetUser, new Claim("status", "in-force")).GetAwaiter().GetResult();
+                
             }
                 
             host.Run();
