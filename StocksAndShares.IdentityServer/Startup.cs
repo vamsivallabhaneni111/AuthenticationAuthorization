@@ -44,7 +44,7 @@ namespace StocksAndShares.IdentityServer
 
             services.AddIdentityServer()
                 .AddAspNetIdentity<IdentityUser>()
-                //.AddInMemoryApiScopes(MyConfiguration.ApiScopes)
+
                 .AddInMemoryIdentityResources(MyConfiguration.GetIdentityResources)
                 .AddInMemoryApiResources(MyConfiguration.GetApiResources)
                 .AddInMemoryClients(MyConfiguration.GetClients)

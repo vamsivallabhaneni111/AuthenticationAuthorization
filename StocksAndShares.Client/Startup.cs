@@ -22,11 +22,11 @@ namespace StocksAndShares.Client
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(config =>
-                {
-                    config.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    config.DefaultChallengeScheme = "oidc";
-                    config.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
+            {
+                config.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = "oidc";
+                config.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddOpenIdConnect("oidc", options =>
                 {
@@ -36,19 +36,17 @@ namespace StocksAndShares.Client
                     options.SaveTokens = true;
                     options.ResponseType = "code";
 
+
+                    options.GetClaimsFromUserInfoEndpoint = false; // process -1
+
                     //custom claims
-                    options.Scope.Add("employee_profile");
-                    options.Scope.Add("custom.profile");
+                    options.Scope.Clear();
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
+                    options.Scope.Add("custom.employee_profile"); //Requesting for custom scope. 
                 });
 
-            services.AddControllersWithViews(options => {
-                // Global Auth Policy
-                var authPolicy_global = new AuthorizationPolicyBuilder()
-                                        .RequireAuthenticatedUser()
-                                        .Build();
-
-                //options.Filters.Add(new AuthorizeFilter(authPolicy_global));
-            });
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

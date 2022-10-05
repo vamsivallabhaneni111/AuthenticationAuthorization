@@ -10,18 +10,6 @@ namespace StocksAndShares.IdentityServer
         public static IEnumerable<Client> GetClients =>
             new List<Client>
             {
-                // Registering client
-                new Client
-                {
-                    ClientId = "client_id",
-                    ClientSecrets = new List<Secret>()
-                    {
-                        new Secret("client_secret".ToSha256())
-                    },
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "LiquidFunds" }
-                },
-
                 // Registering client for mvc
                 new Client
                 {
@@ -32,16 +20,14 @@ namespace StocksAndShares.IdentityServer
                     },
                     RedirectUris = { "https://localhost:44362/signin-oidc" },
                     AllowedGrantTypes = GrantTypes.Code,
-                    AllowedScopes = { 
-                        "LiquidFunds", 
-                        "Aum", 
+                    AllowedScopes = {
+                        "Aum",
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "employee_profile",
-                        "custom.profile",
+                        "custom.employee_profile", //custom Id-Scope
                     },
-                    RequireConsent = false,
                     AlwaysIncludeUserClaimsInIdToken = true,
+                    RequireConsent = false,
                 }
             };
 
@@ -56,33 +42,16 @@ namespace StocksAndShares.IdentityServer
 
                 new IdentityResource
                 {
-                    Name = "employee_profile",
+                    Name = "custom.employee_profile",
                     UserClaims = {"employee_id"},
-                },
-                new IdentityResource(
-                    name: "custom.profile",
-                    displayName: "Custom profile",
-                    claimTypes: new[] { "status" }),
+                }
             };
 
         // This is used to craft the access Token by IdentityServer.
         public static IEnumerable<ApiResource> GetApiResources =>
             new List<ApiResource> {
-                new ApiResource("LiquidFunds"),
 
                 new ApiResource("Aum")
             };
-
-
-        //public static IEnumerable<Scope> Scopes =>
-        //    new List<Scope>
-        //    {
-        //        new Scope
-        //        {
-        //            Name= "employee_profile",
-        //            UserClaims = {"employee_id"},
-                    
-        //        }
-        //    };
     }
 }
