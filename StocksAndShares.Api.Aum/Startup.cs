@@ -48,7 +48,7 @@ namespace StocksAndShares.Api.Aum
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllerRoute("Default", "api/{controller}/{action}");
             });
         }
     }

@@ -45,8 +45,8 @@ namespace StocksAndShares.Api.Aum.Services.Factory
                 new ClientCredentialsTokenRequest()
                 {
                     Address = discoveryDocument.TokenEndpoint,
-                    ClientId = "client_id",
-                    ClientSecret = "client_secret",
+                    ClientId = "client_id_aum",
+                    ClientSecret = "client_secret_aum",
                     Scope = "LiquidFunds"
                 });
         }

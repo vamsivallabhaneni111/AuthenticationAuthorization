@@ -10,6 +10,18 @@ namespace StocksAndShares.IdentityServer
         public static IEnumerable<Client> GetClients =>
             new List<Client>
             {
+                // Registering client
+                new Client
+                {
+                    ClientId = "client_id_aum",
+                    ClientSecrets = new List<Secret>()
+                    {
+                        new Secret("client_secret_aum".ToSha256())
+                    },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "LiquidFunds" }
+                },
+
                 // Registering client for mvc
                 new Client
                 {
@@ -26,7 +38,9 @@ namespace StocksAndShares.IdentityServer
                         IdentityServerConstants.StandardScopes.Profile,
                         "custom.employee_profile", //custom Id-Scope
                     },
+
                     AlwaysIncludeUserClaimsInIdToken = true,
+                    AllowOfflineAccess = true,
                     RequireConsent = false,
                 }
             };
@@ -50,6 +64,7 @@ namespace StocksAndShares.IdentityServer
         // This is used to craft the access Token by IdentityServer.
         public static IEnumerable<ApiResource> GetApiResources =>
             new List<ApiResource> {
+                new ApiResource("LiquidFunds"),
 
                 new ApiResource("Aum")
             };

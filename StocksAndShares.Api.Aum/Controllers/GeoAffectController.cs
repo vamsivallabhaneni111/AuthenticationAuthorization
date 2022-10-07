@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StocksAndShares.Api.Aum.Services;
 using System;
 using System.Threading.Tasks;
@@ -17,7 +18,21 @@ namespace StocksAndShares.Api.Aum.Controllers
             this._liquidFundsService = liquidFundsService;
         }
 
-        public async Task<IActionResult> Index()
+        [Authorize]
+        public IActionResult Home()
+        {
+            try
+            {
+                return Ok("I am AUM service, I can provide all details of Geo-Effects related to Equity");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // Get this from LiquidFundsService API
+        public async Task<IActionResult> ShowCurrencyAtLocation()
         {
             try
             {

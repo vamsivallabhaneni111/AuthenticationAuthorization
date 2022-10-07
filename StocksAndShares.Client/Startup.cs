@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,11 @@ namespace StocksAndShares.Client
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // utilities
+            services.AddHttpClient<StockAndSharesClientManager>();
+            services.AddTransient<IStockAndSharesClientManager, StockAndSharesClientManager>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddAuthentication(config =>
             {
                 config.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -37,13 +43,7 @@ namespace StocksAndShares.Client
                     options.ResponseType = "code";
 
 
-                    options.GetClaimsFromUserInfoEndpoint = false; // process -1
-
-                    //custom claims
-                    options.Scope.Clear();
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-                    options.Scope.Add("custom.employee_profile"); //Requesting for custom scope. 
+                    options.GetClaimsFromUserInfoEndpoint = false;
                 });
 
             services.AddControllersWithViews();
