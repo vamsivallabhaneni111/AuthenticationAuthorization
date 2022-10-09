@@ -7,7 +7,7 @@ namespace StocksAndShares.Api.LiquidFunds.Controllers
     {
         
         [Authorize]
-        public string CurrencyAtLocation()
+        public string GetCurrencyAtLocation()
         {
             return "1 USD = 70 INR";
         }

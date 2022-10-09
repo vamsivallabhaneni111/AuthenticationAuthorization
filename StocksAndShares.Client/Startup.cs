@@ -1,13 +1,13 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StocksAndShares.Client.ApiGateway.Factory;
+using StocksAndShares.Client.ApiGateway.FundTracker;
+using StocksAndShares.Client.ApiGateway.LiquidFunds;
 
 namespace StocksAndShares.Client
 {
@@ -22,10 +22,13 @@ namespace StocksAndShares.Client
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // utilities
-            services.AddHttpClient<StockAndSharesClientManager>();
-            services.AddTransient<IStockAndSharesClientManager, StockAndSharesClientManager>();
+            // services
+            services.AddHttpClient<StocksAndSharesHttpClient>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IStocksAndSharesHttpClient, StocksAndSharesHttpClient>();
+            
+            services.AddScoped<ILiquidFundsService, LiquidFundsService>();
+            services.AddScoped<IFundTrackerService, FundTrackerService>();
 
             services.AddAuthentication(config =>
             {
@@ -44,6 +47,13 @@ namespace StocksAndShares.Client
 
 
                     options.GetClaimsFromUserInfoEndpoint = false;
+
+                    options.Scope.Clear();
+                    options.Scope.Add("profile");
+                    options.Scope.Add("openid");
+                    options.Scope.Add("aum.read");
+                    options.Scope.Add("liquid_funds.read");
+                    options.Scope.Add("custom.employee_profile");
                 });
 
             services.AddControllersWithViews();

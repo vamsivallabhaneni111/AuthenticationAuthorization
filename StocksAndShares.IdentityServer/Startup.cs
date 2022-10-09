@@ -46,6 +46,7 @@ namespace StocksAndShares.IdentityServer
                 .AddAspNetIdentity<IdentityUser>()
 
                 .AddInMemoryIdentityResources(MyConfiguration.GetIdentityResources)
+                .AddInMemoryApiScopes(MyConfiguration.ApiScopes)
                 .AddInMemoryApiResources(MyConfiguration.GetApiResources)
                 .AddInMemoryClients(MyConfiguration.GetClients)
                 .AddDeveloperSigningCredential();

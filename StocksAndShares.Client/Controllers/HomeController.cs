@@ -1,20 +1,22 @@
-﻿using IdentityModel.Client;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
+using StocksAndShares.Client.ApiGateway.FundTracker;
+using StocksAndShares.Client.ApiGateway.LiquidFunds;
 using System.Threading.Tasks;
 
 namespace StocksAndShares.Client.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IStockAndSharesClientManager _stockAndSharesClient;
+        private readonly ILiquidFundsService _liquidFundsService;
+        private readonly IFundTrackerService _fundTrackerService; 
 
-        public HomeController(IStockAndSharesClientManager stockAndSharesClient)
+        public HomeController(
+            ILiquidFundsService liquidFundsService, 
+            IFundTrackerService fundTrackerService)
         {
-            _stockAndSharesClient = stockAndSharesClient;
+            _liquidFundsService = liquidFundsService;
+            _fundTrackerService = fundTrackerService;
         }
 
         [HttpGet]
@@ -32,10 +34,11 @@ namespace StocksAndShares.Client.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Secret()
+        public async Task<IActionResult> CurrentNews()
         {
-            var secretmessage = await _stockAndSharesClient.GetResourceAsync<string>("/GeoAffect/Home");
-            return View("Secret", secretmessage);
+            var currencyAtLocation = await _liquidFundsService.GetCurrencyAtLocation();
+            var fundTracker = await _fundTrackerService.GetIntelFundAmount();
+            return View("Secret", currencyAtLocation+fundTracker);
         }
     }
 

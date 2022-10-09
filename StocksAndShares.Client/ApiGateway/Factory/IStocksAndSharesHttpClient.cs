@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace StocksAndShares.Api.Aum.Services.Factory
+namespace StocksAndShares.Client.ApiGateway.Factory
 {
     public interface IStocksAndSharesHttpClient
     {

@@ -21,9 +21,11 @@ namespace StocksAndShares.Api.LiquidFunds
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options => {
                     options.Authority = "https://localhost:44322/";
+                    options.Audience = "liquid_funds";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateAudience = false
+                        ValidIssuer = "https://localhost:44322",
+                        ValidateAudience = true,
                     };
                 });
             services.AddControllers();

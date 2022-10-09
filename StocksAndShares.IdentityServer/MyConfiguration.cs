@@ -7,6 +7,13 @@ namespace StocksAndShares.IdentityServer
 {
     public static class MyConfiguration
     {
+        private const string AUM = "aum";
+        private const string AUM_Read = "aum.read";
+        private const string AUM_Write = "aum.write";
+        private const string LiquidFunds = "liquid_funds";
+        private const string LiquidFunds_Read = "liquid_funds.read";
+        private const string LiquidFunds_Write = "liquid_funds.write";
+
         public static IEnumerable<Client> GetClients =>
             new List<Client>
             {
@@ -33,12 +40,12 @@ namespace StocksAndShares.IdentityServer
                     RedirectUris = { "https://localhost:44362/signin-oidc" },
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowedScopes = {
-                        "Aum",
+                        AUM_Read,
+                        LiquidFunds_Read,
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "custom.employee_profile", //custom Id-Scope
                     },
-
                     AlwaysIncludeUserClaimsInIdToken = true,
                     AllowOfflineAccess = true,
                     RequireConsent = false,
@@ -64,9 +71,27 @@ namespace StocksAndShares.IdentityServer
         // This is used to craft the access Token by IdentityServer.
         public static IEnumerable<ApiResource> GetApiResources =>
             new List<ApiResource> {
-                new ApiResource("LiquidFunds"),
+                new ApiResource
+                {
+                    Name = LiquidFunds,
+                    DisplayName = "Liquid Funds Api",
+                    Scopes = { LiquidFunds_Read, LiquidFunds_Write }
+                },
 
-                new ApiResource("Aum")
+                new ApiResource
+                {
+                   Name = AUM,
+                   DisplayName = "A.U.M Api",
+                   Scopes = { AUM_Read, AUM_Write }
+                },
+            };
+
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new List<ApiScope> { 
+                new ApiScope(AUM_Read),
+                new ApiScope(AUM_Write),
+                new ApiScope(LiquidFunds_Read),
+                new ApiScope(LiquidFunds_Write)
             };
     }
 }

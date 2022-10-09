@@ -23,7 +23,7 @@ namespace StocksAndShares.IdentityServer
                 userManager.CreateAsync(SeedingUsers.GetUser, "password").GetAwaiter().GetResult();
                 userManager.AddClaimsAsync(SeedingUsers.GetUser, new List<Claim>
                 {
-                    new Claim("employee_id", "employee_id") //added employee_id as custom claim
+                    new Claim("employee_id", "employee_id"), //added employee_id as custom claim
                 }).GetAwaiter().GetResult();
             }
 

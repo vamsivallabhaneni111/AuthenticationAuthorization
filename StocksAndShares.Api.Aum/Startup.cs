@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StocksAndShares.Api.Aum.Services;
-using StocksAndShares.Api.Aum.Services.Factory;
+using Microsoft.IdentityModel.Tokens;
 
 namespace StocksAndShares.Api.Aum
 {
@@ -19,14 +18,25 @@ namespace StocksAndShares.Api.Aum
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // utilities
-            services.AddHttpClient<StocksAndSharesHttpClient>();
-            services.AddTransient<IStocksAndSharesHttpClient, StocksAndSharesHttpClient>();
-
-            // services
-            services.AddScoped<ILiquidFundsService, LiquidFundsService>();
-            
             services.AddControllers();
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options => {
+                    options.Authority = "https://localhost:44322/";
+                    options.Audience = "aum";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = "https://localhost:44322",
+                        ValidateAudience = true,
+                    };
+                });
+
+            services.AddAuthorization((options) =>
+            {
+                options.AddPolicy("allow_aum.read_only_user_scope", policy =>
+                    policy.RequireClaim("scope", "aum.read_only_user")
+                );
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -45,6 +55,9 @@ namespace StocksAndShares.Api.Aum
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
