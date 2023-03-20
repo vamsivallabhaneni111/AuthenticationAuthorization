@@ -51,6 +51,7 @@ namespace StocksAndShares.Client
                     options.Scope.Clear();
                     options.Scope.Add("profile");
                     options.Scope.Add("openid");
+                    options.Scope.Add("offline_access");
                     options.Scope.Add("aum.read");
                     options.Scope.Add("liquid_funds.read");
                     options.Scope.Add("custom.employee_profile");

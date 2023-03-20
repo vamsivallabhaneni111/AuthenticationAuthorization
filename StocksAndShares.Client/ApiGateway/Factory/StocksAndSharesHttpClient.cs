@@ -41,6 +41,28 @@ namespace StocksAndShares.Client.ApiGateway.Factory
 
         }
 
+        public async Task RefreshAccessTokenAsync()
+        {
+            var apiClient = _httpClientFactory.CreateClient();
+            var discoveryDoc = await apiClient.GetDiscoveryDocumentAsync("https://localhost:44322/");
+
+            var refreshToken = await _httpContext.GetTokenAsync("refresh_token");
+
+            var tokenResponse = await apiClient.RequestRefreshTokenAsync(new RefreshTokenRequest
+            {
+                ClientId = "client_id_mvc",
+                ClientSecret = "client_secret_mvc",
+                Address = discoveryDoc.TokenEndpoint,
+                RefreshToken = refreshToken,
+            });
+
+            var authInfo = await _httpContext.AuthenticateAsync("Cookies");
+            authInfo.Properties.UpdateTokenValue("access_token", tokenResponse.AccessToken);
+            authInfo.Properties.UpdateTokenValue("refresh_token", tokenResponse.RefreshToken);
+            
+            await _httpContext.SignInAsync("Cookies", authInfo.Principal, authInfo.Properties);
+        }
+
         private async Task<TResult> ConvertToModel<TResult>(HttpResponseMessage responseMessage)
         {
             var content = await responseMessage.Content.ReadAsStringAsync();
